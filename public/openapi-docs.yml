@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: My API
+  description: This is the API
+servers:
+  - url: v1
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "1212121"
+        name:
+          type: string
+          example: Example Task
+        completed:
+          type: boolean
+          example: false
+      required:
+        - id
+        - name
+        - completed
+  parameters: {}
+paths:
+  /api/tasks:
+    get:
+      tags:
+        - task
+      summary: タスク取得
+      description: 登録されているタスクを返却します
+      responses:
+        "200":
+          description: タスクの取得成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+    post:
+      tags:
+        - task
+      summary: タスク登録
+      description: タスクを登録します
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/Task"
+                - properties:
+                    name:
+                      type: string
+                      example: Example Task
+                  required:
+                    - name
+      responses:
+        "200":
+          description: タスクの取得成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
